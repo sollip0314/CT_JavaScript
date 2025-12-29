@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    function solution(decimal){
+      const stack = [];
+
+      while(decimal > 0){
+        const remainder = decimal % 2;
+        stack.push(remainder);
+        decimal = Math.floor(decimal / 2);
+      }
+
+      let binary ="";
+      while(stack.length > 0){
+        binary += stack.pop();  // (기법) String 타입의 변수에 +를 하면서 글자를 붙인다.
+      }
+
+      console.log(binary);
+      return binary;
+    }
+
+    solution(10);
+  </script>
+</head>
+<body>
+  
+</body>
+</html>

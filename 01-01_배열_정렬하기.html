@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    // 측정 함수
+    function measureTime(callback , arr){
+      const start = Date.now();
+      const result = callback(arr);
+      const end = Date.now();
+      return [end - start, result];
+    }
+
+    // sort() 함수
+    function doSort(arr){
+      arr.sort((a, b) => a -b); // 오름차순 정렬
+      return arr
+    }
+
+    // 버블 정렬
+    function bubbleSort(arr){
+      const n = arr.length;
+      for(let i = 0; i < n - 1; i++){
+        for(let j = 0; j < n - 1 - i; j++){
+            if(arr[j] > arr[j + 1])
+              [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+        }
+      }
+      return arr;
+    }
+
+    // 어레이 초기화
+    let arr = Array.from({length : 10000}, (_, k) => 10000 - k);
+    
+    // sort() 성능 측정
+    const [doSortTime, doSortResult] = measureTime(doSort, arr);
+    console.log(`doSort 소요시간 : ${doSortTime} ms`);
+    console.log(doSortResult);
+
+    // 어레이 초기화
+    arr = Array.from({length : 10000}, (_, k) => 10000 - k);
+
+    // 버블 정렬 성능 측정
+    const [bubbleTime, bubbleResult] = measureTime(bubbleSort, arr);
+    console.log(`bubbleSort 소요시간 : ${bubbleTime} ms`);
+    console.log(bubbleResult);    
+    
+  </script>
+</head>
+<body>
+</body>
+</html>

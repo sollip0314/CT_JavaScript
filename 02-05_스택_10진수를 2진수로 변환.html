@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2진수 변환기</title>
+  <script>
+    function solution(number) {
+      // 1. 음수 및 정수 확인 (방어 기제)
+      if (!Number.isInteger(number) || number < 0) {
+        console.log("입력값이 0 이상의 정수가 아닙니다.");
+        return;
+      }
+
+      // 2. 0에 대한 예외 처리
+      if (number === 0) {
+        console.log("0");
+        return "0";
+      }
+
+      const binary = [];
+
+      // 3. 변환 로직 (나머지를 배열에 저장)
+      while (number > 0) {
+        binary.push(number % 2);
+        number = Math.floor(number / 2);
+      }
+
+      // 4. 배열을 뒤집고 문자열로 결합
+      const result = binary.reverse().join('');
+      console.log(result);
+      return result;
+    }
+
+    // 예시 실행
+    solution(11);
+
+    // 참고: 내장 함수를 이용한 방식
+    // const solution = (number) => number.toString(2);
+  </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<script>
+  function solution(N, stages) {
+  // 1. 각 스테이지에 머물러 있는 도전자 수를 구함
+  const challenger = new Array(N + 2).fill(0);
+  for (const stage of stages) {
+    challenger[stage] += 1;
+  }
+
+  // 2. 전체 참가자 수 초기화
+  let total = stages.length;
+
+  // 3. 스테이지별 실패율 계산
+  const fails = {};
+
+  for (let i = 1; i <= N; i++) {
+    if (total === 0) {
+      // 남은 도전자가 없는 경우 실패율은 0
+      fails[i] = 0;
+    } else {
+      // 실패율 = 현재 스테이지에 멈춰있는 인원 / 현재 스테이지에 도달한 총 인원
+      fails[i] = challenger[i] / total;
+      // 다음 스테이지 계산을 위해 현재 스테이지에 머문 인원을 제외함
+      total -= challenger[i];
+    }
+  }
+
+  // 4. 실패율 기준 내림차순 정렬 (실패율이 같다면 스테이지 번호 오름차순)
+  // entries()를 통해 [스테이지번호, 실패율] 형태의 배열로 변환 후 정렬
+  const result = Object.entries(fails).sort((a, b) => {
+    if (b[1] === a[1]) {
+      return a[0] - b[0]; // 실패율이 같으면 스테이지 번호 순
+    }
+    return b[1] - a[1]; // 실패율 내림차순
+  });
+
+  // 5. 스테이지 번호만 추출하여 반환
+  return result.map((v) => Number(v[0]));
+}
+
+// 테스트 실행
+const N = 5;
+const stages = [2, 1, 2, 6, 2, 4, 3, 3];
+console.log(solution(N, stages)); // 결과: [3, 4, 2, 1, 5]
+
+</script>
+<body>
+</body>
+</html>
