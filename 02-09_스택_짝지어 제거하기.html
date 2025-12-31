@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      /**
+       * 문자열 내 인접한 동일 문자를 제거하여 최종적으로 모두 제거되는지 판별하는 함수
+       * @param {string} str - 분석할 대상 문자열
+       * @returns {number} - 모두 제거되면 1, 남으면 0 반환
+       */
+      function solution(str) {
+        const stack = [];
+
+        for (let char of str) {
+          // 스택의 꼭대기(마지막 값)와 현재 문자가 같다면 짝이 맞으므로 제거
+          // stack[stack.length - 1]은 데이터를 파괴하지 않고 확인만 하는 'Peek' 동작
+          if (stack.length > 0 && stack[stack.length - 1] === char) {
+            stack.pop();
+          } else {
+            // 스택이 비었거나 짝이 아니면 일단 스택에 저장
+            stack.push(char);
+          }
+        }
+
+        // 삼항 연산자를 사용하여 시인성을 극대화
+        return stack.length === 0 ? 1 : 0;
+      }
+
+      // 'aabbaa'의 경우: aa(제거) -> bb(제거) -> aa(제거) 순으로 동작하여 결과는 1이 됩니다.
+      console.log(solution("aabbaa"));
+    </script>
+  </head>
+
+  <body></body>
+</html>

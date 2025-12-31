@@ -1,57 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>방문 길이 문제 풀이</title>
-  <script>
-    // 좌표가 유효한 범위(-5 ~ 5) 안에 있는지 확인하는 함수
-    function isValidMove(nx, ny) {
-      return nx >= -5 && nx <= 5 && ny >= -5 && ny <= 5;
-    }
-
-    // 방향에 따라 다음 좌표를 계산하는 함수
-    function updateLocation(x, y, dir) {
-      switch (dir) {
-        case 'U': return [x, y + 1];
-        case 'D': return [x, y - 1];
-        case 'R': return [x + 1, y];
-        case 'L': return [x - 1, y];
-        default: return [x, y];
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>방문 길이 문제 풀이</title>
+    <script>
+      // 좌표가 유효한 범위(-5 ~ 5) 안에 있는지 확인하는 함수
+      function isValidMove(nx, ny) {
+        return nx >= -5 && nx <= 5 && ny >= -5 && ny <= 5;
       }
-    }
 
-    function solution(dirs) {
-      let x = 0;
-      let y = 0;
-      const visited = new Set(); // 중복 경로를 방지하기 위한 집합
+      // 방향에 따라 다음 좌표를 계산하는 함수
+      function updateLocation(x, y, dir) {
+        switch (dir) {
+          case "U":
+            return [x, y + 1];
+          case "D":
+            return [x, y - 1];
+          case "R":
+            return [x + 1, y];
+          case "L":
+            return [x - 1, y];
+          default:
+            return [x, y];
+        }
+      }
 
-      for (const move of dirs) {
-        const [nx, ny] = updateLocation(x, y, move);
+      function solution(dirs) {
+        let x = 0;
+        let y = 0;
+        const visited = new Set(); // 중복 경로를 방지하기 위한 집합
 
-        // 1. 범위를 벗어난 이동인지 검사
-        if (!isValidMove(nx, ny)) {
-          continue; 
+        for (const move of dirs) {
+          const [nx, ny] = updateLocation(x, y, move);
+
+          // 1. 범위를 벗어난 이동인지 검사
+          if (!isValidMove(nx, ny)) {
+            continue;
+          }
+
+          // 2. 경로 기록 (A->B와 B->A를 동시에 기록하여 무방향 그래프의 특징 반영)
+          // 콤마(,)를 넣어 좌표 간 구분을 명확히 함
+          visited.add(`${x},${y} -> ${nx},${ny}`);
+          visited.add(`${nx},${ny} -> ${x},${y}`);
+
+          // 3. 현재 위치를 새로운 좌표로 이동
+          [x, y] = [nx, ny];
         }
 
-        // 2. 경로 기록 (A->B와 B->A를 동시에 기록하여 무방향 그래프의 특징 반영)
-        // 콤마(,)를 넣어 좌표 간 구분을 명확히 함
-        visited.add(`${x},${y} -> ${nx},${ny}`);
-        visited.add(`${nx},${ny} -> ${x},${y}`);
-
-        // 3. 현재 위치를 새로운 좌표로 이동
-        [x, y] = [nx, ny];
+        // 한 경로당 두 번씩 저장되었으므로 전체 크기를 2로 나눔
+        return visited.size / 2;
       }
 
-      // 한 경로당 두 번씩 저장되었으므로 전체 크기를 2로 나눔
-      return visited.size / 2;
-    }
-
-    // 테스트 실행 예시 (필요시 사용)
-    console.log(solution("ULURRDLLU")); 
-  </script>
-</head>
-<body>
-  <h1>알고리즘 수련 중입니다.</h1>
-</body>
+      // 테스트 실행 예시 (필요시 사용)
+      console.log(solution("ULURRDLLU"));
+    </script>
+  </head>
+  <body>
+    <h1>알고리즘 수련 중입니다.</h1>
+  </body>
 </html>

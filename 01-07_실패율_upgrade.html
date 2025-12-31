@@ -1,45 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <script>
-    function solution(N, stages) {
-      // 1. 각 스테이지에 멈춰있는 인원을 파악합니다. (적군 파악)
-      const challenger = new Array(N + 2).fill(0);
-      for (const stage of stages) {
-        challenger[stage] += 1;
-      }
-
-      const fails = []; // 객체 대신 배열로 관리하면 정렬이 더 수월합니다.
-      let total = stages.length; // 초기 총 병력
-
-      // 2. 1단계부터 N단계까지 진격하며 실패율 계산
-      for (let i = 1; i <= N; i++) {
-        if (total === 0) {
-          fails.push({ stage: i, rate: 0 });
-          continue;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      function solution(N, stages) {
+        // 1. 각 스테이지에 멈춰있는 인원을 파악합니다. (적군 파악)
+        const challenger = new Array(N + 2).fill(0);
+        for (const stage of stages) {
+          challenger[stage] += 1;
         }
 
-        const failureRate = challenger[i] / total;
-        fails.push({ stage: i, rate: failureRate });
+        const fails = []; // 객체 대신 배열로 관리하면 정렬이 더 수월합니다.
+        let total = stages.length; // 초기 총 병력
 
-        // 3. 현재 단계에서 탈락한 자들을 전체 병력에서 제외 (중요!)
-        total -= challenger[i];
+        // 2. 1단계부터 N단계까지 진격하며 실패율 계산
+        for (let i = 1; i <= N; i++) {
+          if (total === 0) {
+            fails.push({ stage: i, rate: 0 });
+            continue;
+          }
+
+          const failureRate = challenger[i] / total;
+          fails.push({ stage: i, rate: failureRate });
+
+          // 3. 현재 단계에서 탈락한 자들을 전체 병력에서 제외 (중요!)
+          total -= challenger[i];
+        }
+
+        // 4. 실패율 기준 내림차순 정렬 (실패율이 같으면 스테이지 번호순)
+        // Note: JavaScript의 sort는 stable 정렬을 보장하지 않는 환경이 있을 수 있으나,
+        // 현대 브라우저에서는 b.rate - a.rate가 같을 경우 원래 순서(i 순서)를 유지합니다.
+        fails.sort((a, b) => b.rate - a.rate);
+
+        // 5. 스테이지 번호만 추출하여 승전보를 올립니다.
+        return fails.map((item) => item.stage);
       }
-
-      // 4. 실패율 기준 내림차순 정렬 (실패율이 같으면 스테이지 번호순)
-      // Note: JavaScript의 sort는 stable 정렬을 보장하지 않는 환경이 있을 수 있으나, 
-      // 현대 브라우저에서는 b.rate - a.rate가 같을 경우 원래 순서(i 순서)를 유지합니다.
-      fails.sort((a, b) => b.rate - a.rate);
-
-      // 5. 스테이지 번호만 추출하여 승전보를 올립니다.
-      return fails.map((item) => item.stage);
-    }
-  </script>
-</head>
-<body>
-
-</body>
+    </script>
+  </head>
+  <body></body>
 </html>

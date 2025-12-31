@@ -1,43 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<script>
-  function solution(answers){
-    const patterns = [
-      [1, 2, 3, 4, 5],                // 1번 수포자의 찍기 패턴
-      [2, 1, 2, 3, 2, 4, 2, 5],       // 2번 수포자의 찍기 패턴
-      [3, 3, 1, 1, 2, 2, 4, 4, 5, 5], // 3번 수포자의 찍기 패턴
-    ];
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <script>
+    function solution(answers) {
+      const patterns = [
+        [1, 2, 3, 4, 5], // 1번 수포자의 찍기 패턴
+        [2, 1, 2, 3, 2, 4, 2, 5], // 2번 수포자의 찍기 패턴
+        [3, 3, 1, 1, 2, 2, 4, 4, 5, 5], // 3번 수포자의 찍기 패턴
+      ];
 
-    const scores = new Array(patterns.length).fill(0)
+      const scores = new Array(patterns.length).fill(0);
 
-    for(const [i, answer] of answers.entries()){
-      for(const [j, pattern] of patterns.entries()){ 
-        if(answer === pattern[i % pattern.length])    // ★ (암기)
-        {
-          scores[j] += 1;
+      for (const [i, answer] of answers.entries()) {
+        for (const [j, pattern] of patterns.entries()) {
+          if (answer === pattern[i % pattern.length]) {
+            // ★ (암기)
+            scores[j] += 1;
+          }
         }
       }
-    }
-  
-  // 가장 높은 점수 저장
-  const maxScore = Math.max(...scores);
 
-  const highestScores =[];
-  for(let i = 0; i < scores.length; i++){
-    if(scores[i] === maxScore){
-      highestScores.push(i + 1);
-    }
-  }
+      // 가장 높은 점수 저장
+      const maxScore = Math.max(...scores);
 
-  return highestScores;
-  }    
-</script>
-<body>
-  
-</body>
+      const highestScores = [];
+      for (let i = 0; i < scores.length; i++) {
+        if (scores[i] === maxScore) {
+          highestScores.push(i + 1);
+        }
+      }
+
+      return highestScores;
+    }
+  </script>
+  <body></body>
 </html>

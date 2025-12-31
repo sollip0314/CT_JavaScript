@@ -5,32 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script>
+      // 자바스크립트의 배열은 크기를 동적으로 관리하므로 maxSize나 isFull() 함수, isEmpty() 함수는 실제 문제를 풀 때 구현할 필요가 없다.
+      // 또한 isEmpty() 함수는 stack.length === 0 으로 검사하면 된다.
       const stack = []; // 스택 초기화
-      const maxSize = 10; // 스택의 최대 크기
-
-      // 스택이 가득 찼는지 확인하는 함수
-      function isFull(stack) {
-        return stack.length === maxSize;
-      }
-
-      // 스택이 비어 있는지 확인하는 함수
-      function isEmpty(stack) {
-        return stack.length === 0;
-      }
 
       // 스택에 데이터를 추가하는 함수
       function push(stack, item) {
-        if (isFull(stack)) {
-          conole.log("스택이 가득 찼습니다.");
-        } else {
-          stack.push(item);
-          console.log("데이터가 추가되었습니다.");
-        }
+        stack.push(item);
+        console.log("데이터가 추가되었습니다.");
       }
 
       // 스택에서 데이터를 꺼내는 함수
       function pop(stack) {
-        if (isempty(stack)) {
+        if (stack.length === 0) {
           console.log("스택이 비어 있습니다.");
           return null;
         } else {

@@ -1,53 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>방문 길이 알고리즘</title>
-  <script>
-    function solution(dirs) {
-      const path = new Set();
-      let x = 0;
-      let y = 0;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>방문 길이 알고리즘</title>
+    <script>
+      function solution(dirs) {
+        const path = new Set();
+        let x = 0;
+        let y = 0;
 
-      // 1. 문자열을 직접 순회하며 명령 수행
-      for (const move of dirs) {
-        let nx = x;
-        let ny = y;
+        // 1. 문자열을 직접 순회하며 명령 수행
+        for (const move of dirs) {
+          let nx = x;
+          let ny = y;
 
-        // 이동 방향 계산
-        switch (move) {
-          case 'U': ny++; break;
-          case 'D': ny--; break;
-          case 'L': nx--; break;
-          case 'R': nx++; break;
+          // 이동 방향 계산
+          switch (move) {
+            case "U":
+              ny++;
+              break;
+            case "D":
+              ny--;
+              break;
+            case "L":
+              nx--;
+              break;
+            case "R":
+              nx++;
+              break;
+          }
+
+          // 2. 경계 검사: 범위를 벗어나면 해당 명령 무시
+          if (nx < -5 || nx > 5 || ny < -5 || ny > 5) {
+            continue;
+          }
+
+          // 3. 경로 식별자 생성: 양방향 길을 동일하게 처리하기 위해 정렬 후 결합
+          // join() : 배열이 사용
+          const route = [`${x},${y}`, `${nx},${ny}`].sort().join(" -> ");
+
+          // 4. Set에 추가하여 중복 자동 제거
+          path.add(route);
+
+          // 5. 현재 위치 갱신
+          x = nx;
+          y = ny;
         }
 
-        // 2. 경계 검사: 범위를 벗어나면 해당 명령 무시
-        if (nx < -5 || nx > 5 || ny < -5 || ny > 5) {
-          continue;
-        }
-
-        // 3. 경로 식별자 생성: 양방향 길을 동일하게 처리하기 위해 정렬 후 결합
-        // join() : 배열이 사용
-        const route = [`${x},${y}`, `${nx},${ny}`].sort().join(' -> ');
-
-        // 4. Set에 추가하여 중복 자동 제거
-        path.add(route);
-
-        // 5. 현재 위치 갱신
-        x = nx;
-        y = ny;
+        return path.size;
       }
 
-      return path.size;
-    }
-
-    // 결과 확인
-    const pathCount = solution('LULLLLLLU');
-    console.log("처음 걸어본 길의 길이:", pathCount);
-  </script>
-</head>
-<body>
-</body>
+      // 결과 확인
+      const pathCount = solution("LULLLLLLU");
+      console.log("처음 걸어본 길의 길이:", pathCount);
+    </script>
+  </head>
+  <body></body>
 </html>
