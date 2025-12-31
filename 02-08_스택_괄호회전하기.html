@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>괄호 회전하기</title>
     <script>
+      /**
+       * 괄호 회전하기 함수
+       * @param {string} s - 검사할 괄호 문자열
+       * @returns {number} - 올바른 괄호 문자열이 되는 회전 횟수
+       */
       function solution(s) {
         // 기초 정찰: 길이가 홀수라면 절대 짝이 맞을 수 없으므로 종료
         if (s.length % 2 !== 0) return 0;
