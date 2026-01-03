@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      function solutioin(n, k, cmd) {
+        const up = [...new Array(n)].map((_, i) => i - 1);
+        const down = [...new Array(n)].map((_, i) => i + 1);
+        const isRemoved = new Array(n).fill(false); // 생존 여부 기록지
+        const restoreStack = [];
+        let result = "";
+
+        for (const ele of cmd) {
+          const order = ele[0]; // 첫 글자 추출
+          let number = Number(ele.substring(1)) || 0; // 숫자 부분 추출
+
+          if (order === "U") {
+            while (number-- > 0) k = up[k];
+          } else if (order === "D") {
+            while (number-- > 0) k = down[k];
+          } else if (order === "C") {
+            restoreStack.push(k);
+            isRemoved[k] = true;
+
+            if (k === n - 1) {
+              down[up[k]] = n;
+              k = up[k];
+            } else if (k === 0) {
+              up[down[k]] = -1;
+              k = down[k];
+            } else {
+              up[down[k]] = up[k];
+              down[up[k]] = down[k];
+              k = down[k];
+            }
+          } else if (order === "Z") {
+            const r = restoreStack.pop();
+            isRemoved[r] = false;
+
+            // 복구 시 경계 검사 (매우 중요)
+            // 만약 r이 원래 맨 첫 번째(0)였다면, up[r]은 -1입니다.
+            // down[-1]을 참조하려 하면 즉시 코드가 중단됩니다.
+            if (down[r] !== n) up[down[r]] = r;
+            if (up[r] !== -1) down[up[r]] = r;
+          }
+        }
+
+        for (let i = 0; i < n; i++) {
+          result += isRemoved[i] ? "X" : "O";
+        }
+        console.log(result);
+      }
+
+      const cmd = ["D2", "C", "U3", "C", "D4", "C", "U2", "Z", "Z"];
+      const finalResult = solutioin(8, 2, cmd);
+    </script>
+  </head>
+  <body></body>
+</html>

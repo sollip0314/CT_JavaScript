@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script>
+      /*
+       * [크레인 인형 뽑기 게임 - 로직 설명]
+       * 1. N X N 격자판(board)의 각 칸에는 인형이 쌓여 있음 (0은 빈칸).
+       * 2. 크레인(moves)이 특정 열에서 가장 위에 있는 인형을 집어 바구니에 담음.
+       * 3. 바구니에 같은 종류의 인형 2개가 연속해서 쌓이면 두 인형은 터져서 사라짐.
+       * 4. 사라진 인형의 총 개수를 구하는 것이 목적.
+       */
+
+      const board = [
+        [0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 3],
+        [0, 2, 5, 0, 1],
+        [4, 2, 4, 4, 2],
+        [3, 5, 1, 3, 1],
+      ];
+
+      const moves = [1, 5, 3, 5, 1, 2, 1, 4];
+
+      // 시계방향으로 90도 회전 함수
+      // maxtrix[0].map(_, colIndex) : 행렬의 index가 0번째인 element. 즉 첫번째 row를 map 함수를 통해 순회한다.
+      // map(_, colIndex) : 첫번째 파라미터에 _ 두번째 파라미터는 index가 된다.
+      // map(para) : map의 첫번째 파라미터는 element가 된다.
+      const rotateClockwise = (matrix) => {
+        return matrix[0].map(
+          (
+            _,
+            colIndex // 2차원 배열의 각 열을 기준으로 pivot을 박아 놓고 (여기서는 위의 행렬 기준으로 0번째 row를 보면 column이 5개 이므로 5번 순회한다)
+          ) =>
+            matrix
+              .map((ele) => ele[colIndex])
+              .reverse()
+              .filter((value) => value !== 0) // 2차원 배열의 row들을 pivot을 박은 열을 기준으로 그 열의 row들을 colIndex 기준으로 탐색하여 받아온 값을 새로운 배열에 저장한후 reverse() 시킨다.
+        );
+      };
+
+      function solution(board, moves) {
+        const result = [];
+        let count = 0;
+
+        const rotated_array = rotateClockwise(board);
+
+        for (const num of moves) {
+          const val = rotated_array[num - 1].pop();
+          if (!val) continue;
+          if (result[result.length - 1] === val) {
+            result.pop();
+            count += 2;
+            continue;
+          }
+          result.push(val);
+        }
+        console.log(count);
+      }
+
+      solution(board, moves);
+    </script>
+  </head>
+  <body></body>
+</html>
