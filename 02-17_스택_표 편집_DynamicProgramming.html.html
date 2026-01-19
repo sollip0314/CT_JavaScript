@@ -9,7 +9,7 @@
         const up = [...new Array(n)].map((_, i) => i - 1);
         const down = [...new Array(n)].map((_, i) => i + 1);
         const isRemoved = new Array(n).fill(false); // 생존 여부 기록지
-        const restoreStack = [];
+        const restoreStack = []; // isRemoved에서 pop되면 복구되어 살아있다는 것을 기록하는 배열을 별도 생성
         let result = "";
 
         for (const ele of cmd) {
