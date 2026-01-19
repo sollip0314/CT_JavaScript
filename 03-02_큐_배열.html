@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      class Queue {
+        items = [];
+        front = 0;
+        rear = 0;
+
+        // push와 pop
+        // front(맨 앞 노드), rear(맨 끝 노드)
+        // 둘다 포인터
+
+        // push
+        // rear 증가
+        push(item) {
+          this.items.push(item);
+          this.rear++;
+        }
+
+        // pop() 함수 재정의
+        // → front(앞)가 가리키는 것을 반환
+        // → front 증가
+        pop() {
+          return this.items[this.front++];
+        }
+
+        // front와 rear가 같으면 true
+        isEmpty() {
+          return this.front === this.rear;
+        }
+      }
+    </script>
+  </head>
+  <body></body>
+</html>

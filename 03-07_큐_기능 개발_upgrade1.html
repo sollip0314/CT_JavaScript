@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      class Node {
+        constructor(p, s) {
+          // 며칠 뒤에 완성되는지만 계산해서 저장합니다.
+          this.days = Math.ceil((100 - p) / s);
+        }
+      }
+
+      function solution(progresses, speeds) {
+        const nodes = progresses.map((p, i) => new Node(p, speeds[i]));
+        const results = [];
+
+        while (nodes.length > 0) {
+          // 1. 첫 번째 작업이 끝나는 날을 기준으로 잡습니다.
+          let deployDay = nodes[0].days;
+          let count = 0;
+
+          // 2. 기준일(deployDay)보다 빨리 혹은 같이 끝나는 작업들을 한꺼번에 배포합니다.
+          while (nodes.length > 0 && nodes[0].days <= deployDay) {
+            nodes.shift(); // 큐의 앞부분 제거
+            count++;
+          }
+
+          results.push(count);
+        }
+
+        return results;
+      }
+
+      const progresses = [93, 30, 55];
+      const speeds = [1, 30, 5];
+
+      console.log(solution(progresses, speeds));
+    </script>
+  </head>
+  <body></body>
+</html>

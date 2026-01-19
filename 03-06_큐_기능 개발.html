@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      class Queue {
+        items = [];
+        front = 0;
+        rear = 0;
+        results = [];
+
+        push(p, s) {
+          this.items[this.rear++] = new Node(p, s);
+        }
+
+        pop() {
+          return this.items[this.front++];
+        }
+
+        size() {
+          return this.rear - this.front;
+        }
+      }
+
+      class Node {
+        constructor(p, s) {
+          this.progress = p;
+          this.speed = s;
+          this.times = Math.ceil((100 - p) / s);
+        }
+      }
+
+      function solution(progresses, speeds) {
+        const queue = new Queue();
+        for (let i = 0; i < progresses.length; i++) {
+          queue.push(progresses[i], speeds[i]);
+        }
+
+        while (queue.front != queue.rear) {
+          let times = queue.items[queue.front].times;
+
+          queue.items.forEach((ele, index) => {
+            ele.progress += ele.speed * times;
+          });
+
+          let count = 0;
+          while (queue.size() > 0 && queue.items[queue.front].progress >= 100) {
+            queue.pop();
+            count++;
+          }
+          queue.results.push(count);
+        }
+
+        console.log(queue.results);
+      }
+
+      const progresses = [93, 30, 55];
+      const speeds = [1, 30, 5];
+
+      solution(progresses, speeds);
+    </script>
+  </head>
+  <body></body>
+</html>

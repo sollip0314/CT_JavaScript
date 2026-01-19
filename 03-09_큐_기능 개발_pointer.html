@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      function solution(progresses, speeds) {
+        const nodes = progresses.map((p, i) =>
+          Math.ceil((100 - p) / speeds[i])
+        );
+        const results = [];
+        let pointer = 0; // 지시봉 시작
+
+        while (pointer < nodes.length) {
+          let deployDay = nodes[pointer]; // 현재 기준일
+          let count = 0;
+
+          // 기준일보다 빨리 끝나는 애들은 다 같이 count!
+          while (pointer < nodes.length && nodes[pointer] <= deployDay) {
+            pointer++; // 배열을 자르지 않고 지시봉만 이동
+            count++;
+          }
+          results.push(count);
+        }
+
+        return results;
+      }
+      const progresses = [93, 30, 55];
+      const speeds = [1, 30, 5];
+
+      console.log(solution(progresses, speeds));
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      function solution(progresses, speeds) {
+        // 1. 각 작업이 완료되기까지 남은 일수를 계산하여 큐(Queue)에 담습니다.
+        const days = progresses.map((p, i) => Math.ceil((100 - p) / speeds[i]));
+        const results = [];
+
+        while (days.length > 0) {
+          // 2. 가장 앞에 있는 작업이 끝나는 날을 '배포 기준일'로 정합니다.
+          let deployDay = days.shift();
+          let count = 1; // 첫 번째 작업은 이미 배포 확정이므로 1부터 시작
+
+          // 3. 뒤따르는 작업들 중 기준일보다 빨리 끝나는 것들을 함께 배포합니다.
+          while (days.length > 0 && days[0] <= deployDay) {
+            days.shift();
+            count++;
+          }
+
+          results.push(count);
+        }
+
+        return results;
+      }
+
+      const progresses = [93, 30, 55];
+      const speeds = [1, 30, 5];
+
+      console.log(solution(progresses, speeds));
+    </script>
+  </head>
+  <body></body>
+</html>
