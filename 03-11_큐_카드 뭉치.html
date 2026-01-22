@@ -1,23 +1,48 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <script>
-    function solution(){
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>카드 뭉치 알고리즘</title>
+    <script>
+      /**
+       * [문제 정의]
+       * 두 개의 카드 뭉치(card1, card2)에서 카드를 순서대로 한 장씩 사용하여
+       * 주어진 목표 배열(goal)을 만들 수 있는지 판별하는 알고리즘입니다.
+       * * [규칙]
+       * 1. 카드는 반드시 각 뭉치의 제일 앞(순서대로)에서부터 사용해야 함.
+       * 2. 한 번 사용한 카드는 다시 사용할 수 없음.
+       * 3. 기존의 순서를 바꿀 수 없음.
+       */
+      function solution(card1, card2, goal) {
+        let i = 0; // card1의 현재 위치(포인터)
+        let j = 0; // card2의 현재 위치(포인터)
 
-    }
+        for (const ele of goal) {
+          // 첫 번째 카드 뭉치에서 현재 필요한 단어를 찾은 경우
+          if (i < card1.length && ele === card1[i]) {
+            i++;
+          }
+          // 두 번째 카드 뭉치에서 현재 필요한 단어를 찾은 경우
+          else if (j < card2.length && ele === card2[j]) {
+            j++;
+          }
+          // 어느 카드 뭉치에서도 순서에 맞는 단어를 찾지 못한 경우 (실패)
+          else {
+            return "No";
+          }
+        }
 
-    const card1 = ["I", "drink", "water"];
-    const card2 = ["want", "to"];
-    const goal = ["I", "want", "to", "drink", "water"];
+        // 모든 단어를 순서대로 맞췄다면 성공
+        return "Yes";
+      }
 
-    solution(card1, card2, goal)
-    
-  </script>
-</head>
-<body>
-  
-</body>
+      const card1 = ["i", "drink", "water"];
+      const card2 = ["want", "to"];
+      const goal = ["i", "want", "to", "drink", "water"];
+
+      console.log(solution(card1, card2, goal));
+    </script>
+  </head>
+  <body></body>
 </html>
